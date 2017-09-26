@@ -1,12 +1,14 @@
 <?php
-
 /**
  * Helpers of message
  *
  * @author DaiDV
  */
-class Msg {
 
-  //common
-  const ALERT_SUCCESS = 'Success, Complete!';
+namespace App\Helpers;
+
+class Msg
+{
+
+    const ALERT_SUCCESS = 'Success, Complete!';
 }
