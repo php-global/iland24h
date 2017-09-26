@@ -5,8 +5,8 @@
  *
  * @author DaiDV
  */
-class Msg {
+class Msg
+{
 
-  //common
-  const ALERT_SUCCESS = 'Success, Complete!';
+    const ALERT_SUCCESS = 'Success, Complete!';
 }
