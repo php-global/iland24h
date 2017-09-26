@@ -1,10 +1,12 @@
 <?php
-
 /**
  * Helpers of message
  *
  * @author DaiDV
  */
+
+namespace App\Helpers;
+
 class Msg
 {
 

@@ -22,5 +22,4 @@ class HelperServiceProvider extends ServiceProvider
             require_once($filename);
         }
     }
-
 }

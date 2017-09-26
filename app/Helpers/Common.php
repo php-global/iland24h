@@ -1,10 +1,12 @@
 <?php
-
 /**
  * Helpers of common
  *
  * @author DaiDV
  */
+
+namespace App\Helpers;
+
 class Common
 {
 
@@ -28,5 +30,4 @@ class Common
 
         return ($flag) ? str_slug($str, '-') : $str;
     }
-
 }

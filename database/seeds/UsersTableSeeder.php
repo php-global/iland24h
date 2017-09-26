@@ -11,9 +11,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::statement("SET foreign_key_checks=0");
-        DB::table('users')->truncate();
-        DB::statement("SET foreign_key_checks=1");
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
