@@ -11,11 +11,12 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::select('id', 'name', 'description')->orderBy('id', 'DESC')->get();
+        $categories = Category::getListCategories($request);
         return view('categories.index', compact('categories'));
     }
 
@@ -37,11 +38,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $category = new Category();
-        $category->name = $request->name;
-        $category->slug = \App\Helpers\Common::convertViToEn($request->name, true);
-        $category->description = $request->description;
-        $category->save();
+        Category::insertCategory($request);
         return redirect()->route('categories.index')->with([
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::INSERT_SUCCESS
@@ -67,7 +64,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::getCategory($id);
         return view('categories.edit', compact('category'));
     }
 
@@ -80,11 +77,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        $category = Category::findOrFail($id);
-        $category->name = $request->name;
-        $category->slug = \App\Helpers\Common::convertViToEn($request->name, true);
-        $category->description = $request->description;
-        $category->save();
+        Category::updateCategory($request, $id);
         return redirect()->route('categories.index')->with([
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::UPDATE_SUCCESS
@@ -99,8 +92,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
+        Category::deleteCategory($id);
         return redirect()->route('categories.index')->with([
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::DELETE_SUCCESS

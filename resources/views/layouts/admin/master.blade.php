@@ -22,7 +22,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="skin-blue">
+<body class="skin-black">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
     <a href="{{ url('/') }}" class="logo">
@@ -40,14 +40,8 @@
     <aside class="right-side">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                Blank page
-                <small>Control panel</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Blank page</li>
-            </ol>
+            @yield('header')
+            @yield('breadcrumb')
         </section>
 
         <!-- Main content -->

@@ -1,13 +1,24 @@
 @extends('layouts.admin.master')
 
+@section('header')
+<h1>
+    Danh mục tin tức
+    <small>Thêm mới</small>
+</h1>
+@endsection
+
+@section('breadcrumb')
+<ol class="breadcrumb">
+    <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Danh mục tin tức</li>
+</ol>
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-xs-12">
         <!-- general form elements -->
         <div class="box box-primary">
-            <div class="box-header">
-                <h3 class="box-title"></h3>
-            </div><!-- /.box-header -->
             <!-- form start -->
             <form action="{{ route('categories.store') }}" method="POST">
                 {{ csrf_field() }}
@@ -39,7 +50,7 @@
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Tạo mới</button>
+                    <button type="submit" class="btn btn-success">Tạo mới</button>
                 </div>
             </form>
         </div><!-- /.box -->
