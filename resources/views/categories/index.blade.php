@@ -1,5 +1,62 @@
 @extends('layouts.admin.master')
 
 @section('content')
-    TEST
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><a href="{{ route('categories.create') }}" class="btn btn-success">Thêm mới</a></h3>
+                    <div class="box-tools">
+                        <div class="input-group">
+                            <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên danh mục</th>
+                            <th>Mô tả</th>
+                            <th colspan="2">Hành động</th>
+                        </tr>
+                        <?php $no = 1; ?>
+                        @foreach($categories as $category)
+                        <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $category->name }}</td>
+                            <td>{{ $category->description }}</td>
+                            <td>
+                                <i class="fa fa-pencil fa-fw"></i>
+                                <a href="{{ route('categories.edit', $category->id) }}">Edit</a>
+                            </td>
+                            <td>
+                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <i class="fa fa-trash-o fa-fw"></i>
+                                    <a href="javascript:void(0);" onclick="if(confirm('Are you sure delete?')){$(this).parent().submit();}">Delete</a>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
 @endsection

@@ -15,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('categories.index');
+        $categories = Category::select('id', 'name', 'description')->orderBy('id', 'DESC')->get();
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -25,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -36,12 +37,15 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $data = [
-            'name' => $request->input('name'),
-            'slug' => convert_vi_to_en($request->input('name'), true),
-            'description' => $request->input('description')
-        ];
-        return Category::create($data);
+        $category = new Category();
+        $category->name = $request->name;
+        $category->slug = \App\Helpers\Common::convertViToEn($request->name, true);
+        $category->description = $request->description;
+        $category->save();
+        return redirect()->route('categories.index')->with([
+            'flash_level' => 'success',
+            'flash_message' => \App\Helpers\Msg::INSERT_SUCCESS
+        ]);
     }
 
     /**
@@ -63,7 +67,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return Category::find($id);
+        $category = Category::findOrFail($id);
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -75,13 +80,15 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        $data = [
-            'name' => $request->input('name'),
-            'slug' => convert_vi_to_en($request->input('name'), true),
-            'description' => $request->input('description')
-        ];
-        Category::where('id', $id)->update($data);
-        return Category::find($id);
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
+        $category->slug = \App\Helpers\Common::convertViToEn($request->name, true);
+        $category->description = $request->description;
+        $category->save();
+        return redirect()->route('categories.index')->with([
+            'flash_level' => 'success',
+            'flash_message' => \App\Helpers\Msg::UPDATE_SUCCESS
+        ]);
     }
 
     /**
@@ -92,6 +99,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        return Category::where('id', $id)->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return redirect()->route('categories.index')->with([
+            'flash_level' => 'success',
+            'flash_message' => \App\Helpers\Msg::DELETE_SUCCESS
+        ]);
     }
 }
