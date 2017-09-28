@@ -21,14 +21,15 @@ $(function() {
         //If window is small enough, enable sidebar push menu
         if ($(window).width() <= 992) {
             $('.row-offcanvas').toggleClass('active');
-            $('.left-side').removeClass("collapse-left");
-            $(".right-side").removeClass("strech");
-            $('.row-offcanvas').toggleClass("relative");
-            $.cookie('theme_nvcllps', $('.row-offcanvas').hasClass('active') ? 'active relative' : '', { expires: 30, path: '/' });
+            $('.row-offcanvas').toggleClass('relative');
+            $('.left-side').removeClass('collapse-left');
+            $('.right-side').removeClass('strech');
+            $.cookie('theme_nvcllps', $('.row-offcanvas').hasClass('active') ? false : true, { expires: 30, path: '/' });
         } else {
             //Else, enable content streching
-            $('.left-side').toggleClass("collapse-left");
-            $(".right-side").toggleClass("strech");
+            $('.left-side').toggleClass('collapse-left');
+            $('.right-side').toggleClass('strech');
+            $.cookie('theme_nvcllps', $('.right-side').hasClass('strech') ? true : false, { expires: 30, path: '/' });
         }
     });
 
@@ -137,6 +138,8 @@ $(function() {
 
     /* For demo purposes */
     var demo = $('#btn-settings');
+    var theme_skin = $.cookie('theme_skin');
+    var theme_fixed = $.cookie('theme_fixed');
 
     var demo_settings = $("<div />").css({
         "padding": "10px",
@@ -153,8 +156,9 @@ $(function() {
             + "<div class='form-group no-margin'>"
             + "<div class='.checkbox'>"
             + "<label>"
-            + "<input type='checkbox' onchange='change_layout();'/> "
-            + "Menu tĩnh"
+            + "<input type='checkbox' onchange='change_layout();'"
+            + (theme_fixed === 'fixed' ? ' checked' : '')
+            + "/> Menu tĩnh"
             + "</label>"
             + "</div>"
             + "</div>"
@@ -164,8 +168,9 @@ $(function() {
             + "<div class='form-group no-margin'>"
             + "<div class='.radio'>"
             + "<label>"
-            + "<input name='skins' type='radio' onchange='change_skin(\"skin-black\");' /> "
-            + "Đen"
+            + "<input name='skins' type='radio' onchange='change_skin(\"skin-black\");'"
+            + (!theme_skin || theme_skin == 'skin-black' ? ' checked' : '')
+            + "/> Đen"
             + "</label>"
             + "</div>"
             + "</div>"
@@ -173,8 +178,9 @@ $(function() {
             + "<div class='form-group no-margin'>"
             + "<div class='.radio'>"
             + "<label>"
-            + "<input name='skins' type='radio' onchange='change_skin(\"skin-blue\");' checked='checked'/> "
-            + "Xanh dương"
+            + "<input name='skins' type='radio' onchange='change_skin(\"skin-blue\");'"
+            + (theme_skin === 'skin-blue' ? ' checked' : '')
+            + "/> Xanh dương"
             + "</label>"
             + "</div>"
             + "</div>"
@@ -193,6 +199,19 @@ $(function() {
     $("body").append(demo_settings);
 });
 function fix_sidebar() {
+    //If window is small enough, enable sidebar push menu
+    if ($(window).width() <= 992) {
+        if($.cookie('theme_nvcllps') === 'true'){
+            $('.row-offcanvas').removeClass('active');
+            $('.row-offcanvas').removeClass('relative');
+            $('.left-side').removeClass('collapse-left');
+            $('.right-side').removeClass('strech');
+        }else{
+            $('.row-offcanvas').addClass('active');
+            $('.row-offcanvas').addClass('relative');
+        }
+    }
+
     //Make sure the body tag has the .fixed class
     if (!$("body").hasClass("fixed")) {
         return;
@@ -206,7 +225,7 @@ function fix_sidebar() {
 }
 function change_layout() {
     $("body").toggleClass("fixed");
-    $.cookie('theme_fixed', $('body').hasClass('fixed') ? 'fixed' : '', { expires: 30, path: '/' });
+    $.cookie('theme_fixed', $('body').hasClass('fixed') ? true : false, { expires: 30, path: '/' });
     fix_sidebar();
 }
 function change_skin(cls) {

@@ -22,7 +22,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="{{ (isset($_COOKIE['theme_skin']) ? $_COOKIE['theme_skin'] : 'skin-black') . ' ' . (isset($_COOKIE['theme_fixed']) ? $_COOKIE['theme_fixed'] : '') }}">
+<body class="{{ (Request::cookie('theme_skin') ? Request::cookie('theme_skin') : 'skin-black') . (Request::cookie('theme_fixed') === 'true' ? ' fixed' : '') }}">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
     <a href="{{ url('/') }}" class="logo">
@@ -32,12 +32,12 @@
     <!-- Header Navbar: style can be found in header.less -->
     @include('layouts.admin.navbar')
 </header>
-<div class="wrapper row-offcanvas row-offcanvas-left {{ isset($_COOKIE['theme_nvcllps']) ? $_COOKIE['theme_nvcllps'] : 'active relative' }}">
+<div class="wrapper row-offcanvas row-offcanvas-left{{ Request::cookie('theme_nvcllps') === 'true' ? ' active relative' : '' }}">
     <!-- Left side column. contains the logo and sidebar -->
     @include('layouts.admin.sidebar')
 
     <!-- Right side column. Contains the navbar and content of the page -->
-    <aside class="right-side">
+    <aside class="right-side{{ Request::cookie('theme_nvcllps') === 'true' ? ' strech' : '' }}">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             @yield('header')

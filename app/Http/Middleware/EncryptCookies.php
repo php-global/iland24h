@@ -12,6 +12,8 @@ class EncryptCookies extends BaseEncrypter
      * @var array
      */
     protected $except = [
-        //
+        'theme_skin',
+        'theme_fixed',
+        'theme_nvcllps'
     ];
 }

@@ -12,7 +12,6 @@
 */
 
 Route::get('/', function () {
-    //dd(\Illuminate\Support\Facades\Cookie::get('theme_fixed'));//Request::cookie('')
     return view('test');
 });
 
