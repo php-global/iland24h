@@ -199,19 +199,6 @@ $(function() {
     $("body").append(demo_settings);
 });
 function fix_sidebar() {
-    //If window is small enough, enable sidebar push menu
-    if ($(window).width() <= 992) {
-        if($.cookie('theme_nvcllps') === 'true'){
-            $('.row-offcanvas').removeClass('active');
-            $('.row-offcanvas').removeClass('relative');
-            $('.left-side').removeClass('collapse-left');
-            $('.right-side').removeClass('strech');
-        }else{
-            $('.row-offcanvas').addClass('active');
-            $('.row-offcanvas').addClass('relative');
-        }
-    }
-
     //Make sure the body tag has the .fixed class
     if (!$("body").hasClass("fixed")) {
         return;

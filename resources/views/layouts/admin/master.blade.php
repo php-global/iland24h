@@ -32,7 +32,7 @@
     <!-- Header Navbar: style can be found in header.less -->
     @include('layouts.admin.navbar')
 </header>
-<div class="wrapper row-offcanvas row-offcanvas-left{{ Request::cookie('theme_nvcllps') === 'true' ? ' active relative' : '' }}">
+<div class="wrapper row-offcanvas row-offcanvas-left{{ Request::cookie('theme_nvcllps') === 'true' ? '' : ' active relative' }}">
     <!-- Left side column. contains the logo and sidebar -->
     @include('layouts.admin.sidebar')
 
