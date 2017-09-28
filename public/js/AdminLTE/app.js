@@ -17,20 +17,11 @@ $(function() {
     //Enable sidebar toggle
     $("[data-toggle='offcanvas']").click(function(e) {
         e.preventDefault();
-
-        //If window is small enough, enable sidebar push menu
-        if ($(window).width() <= 992) {
-            $('.row-offcanvas').toggleClass('active');
-            $('.row-offcanvas').toggleClass('relative');
-            $('.left-side').removeClass('collapse-left');
-            $('.right-side').removeClass('strech');
-            $.cookie('theme_nvcllps', $('.row-offcanvas').hasClass('active') ? false : true, { expires: 30, path: '/' });
-        } else {
-            //Else, enable content streching
-            $('.left-side').toggleClass('collapse-left');
-            $('.right-side').toggleClass('strech');
-            $.cookie('theme_nvcllps', $('.right-side').hasClass('strech') ? true : false, { expires: 30, path: '/' });
-        }
+        $('.row-offcanvas').toggleClass('active');
+        $('.row-offcanvas').toggleClass('relative');
+        $('.left-side').toggleClass('collapse-left');
+        $('.right-side').toggleClass('strech');
+        $.cookie('theme_nvcllps', $('.left-side').hasClass('collapse-left') ? true : false, { expires: 30, path: '/' });
     });
 
     //Add hover support for touch devices
