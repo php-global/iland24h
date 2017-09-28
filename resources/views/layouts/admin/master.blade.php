@@ -22,7 +22,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="skin-black">
+<body class="{{ (isset($_COOKIE['theme_skin']) ? $_COOKIE['theme_skin'] : 'skin-black') . ' ' . (isset($_COOKIE['theme_fixed']) ? $_COOKIE['theme_fixed'] : '') }}">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
     <a href="{{ url('/') }}" class="logo">
@@ -32,7 +32,7 @@
     <!-- Header Navbar: style can be found in header.less -->
     @include('layouts.admin.navbar')
 </header>
-<div class="wrapper row-offcanvas row-offcanvas-left">
+<div class="wrapper row-offcanvas row-offcanvas-left {{ isset($_COOKIE['theme_nvcllps']) ? $_COOKIE['theme_nvcllps'] : 'active relative' }}">
     <!-- Left side column. contains the logo and sidebar -->
     @include('layouts.admin.sidebar')
 
@@ -61,6 +61,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
+<!-- Jquery Cookie -->
+<script src="{{ asset('js/AdminLTE/jquery.cookie.js') }}" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('js/AdminLTE/app.js') }}" type="text/javascript"></script>
 

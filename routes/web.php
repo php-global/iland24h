@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //dd(\Illuminate\Support\Facades\Cookie::get('theme_fixed'));//Request::cookie('')
+    return view('test');
 });
 
 Auth::routes();

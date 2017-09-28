@@ -24,6 +24,7 @@ $(function() {
             $('.left-side').removeClass("collapse-left");
             $(".right-side").removeClass("strech");
             $('.row-offcanvas').toggleClass("relative");
+            $.cookie('theme_nvcllps', $('.row-offcanvas').hasClass('active') ? 'active relative' : '', { expires: 30, path: '/' });
         } else {
             //Else, enable content streching
             $('.left-side').toggleClass("collapse-left");
@@ -205,11 +206,13 @@ function fix_sidebar() {
 }
 function change_layout() {
     $("body").toggleClass("fixed");
+    $.cookie('theme_fixed', $('body').hasClass('fixed') ? 'fixed' : '', { expires: 30, path: '/' });
     fix_sidebar();
 }
 function change_skin(cls) {
     $("body").removeClass("skin-blue skin-black");
     $("body").addClass(cls);
+    $.cookie('theme_skin', cls, { expires: 30, path: '/' });
 }
 /*END DEMO*/
 $(window).load(function() {
