@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('test');
+    return view('projects.index');
 });
 
 Auth::routes();
@@ -22,3 +22,4 @@ Route::get('/admin', function () {
     return view('categories.index');
 });
 Route::resource('categories', 'CategoryController');
+Route::resource('projects', 'ProjectController');

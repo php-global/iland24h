@@ -6,14 +6,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>{{ config('app.name', 'iland24h') }} | Dashboard</title>
-    <!-- bootstrap 3.0.2 -->
+    <!-- Bootstrap 3.0.2 -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
-    <!-- font Awesome -->
+    <!-- Font Awesome -->
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Ionicons -->
     <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
-    <link href="{{ asset('css/AdminLTE.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('css/master.css') }}" rel="stylesheet" type="text/css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,7 +47,9 @@
         <!-- Main content -->
         <section class="content">
             @if(Session::has('flash_message'))
-                <div class="alert alert-{{ Session::get('flash_level') }}">
+                <div class="alert alert-{{ Session::get('flash_level') }} alert-dismissable">
+                    <i class="fa fa-check"></i>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     {{ Session::get('flash_message') }}
                 </div>
             @endif
@@ -60,11 +62,13 @@
 <!-- jQuery 2.0.2 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/libs/bootstrap.min.js') }}" type="text/javascript"></script>
 <!-- Jquery Cookie -->
-<script src="{{ asset('js/AdminLTE/jquery.cookie.js') }}" type="text/javascript"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('js/AdminLTE/app.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('js/libs/jquery.cookie.js') }}" type="text/javascript"></script>
+<!-- App -->
+<script src="{{ asset('js/apps/master.js') }}" type="text/javascript"></script>
+<!-- Helper -->
+<script src="{{ asset('js/helpers/common.js') }}" type="text/javascript"></script>
+@yield('script')
 </body>
 </html>
