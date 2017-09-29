@@ -18,9 +18,9 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->string('image', 50);
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->longText('content');
-            $table->integer('view');
+            $table->integer('view')->default(0);
             $table->boolean('active')->default(1);
             $table->integer('author_id')->unsigned();
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

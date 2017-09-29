@@ -72,16 +72,16 @@
                         <span class="help-block">{{ $message }}</span>
                     @endforeach
                 </div>
-                <div class="form-group{{ $errors->has('mobile') ? ' has-error' : (count($errors) > 0 ? ' has-success' : '') }}">
-                    <label for="mobile">
+                <div class="form-group{{ $errors->has('price') ? ' has-error' : (count($errors) > 0 ? ' has-success' : '') }}">
+                    <label for="price">
                         @if (count($errors) > 0)
-                            <i class="fa {{ $errors->has('mobile') ? 'fa-times-circle-o' : 'fa-check' }}"></i>
+                            <i class="fa {{ $errors->has('price') ? 'fa-times-circle-o' : 'fa-check' }}"></i>
                         @endif
-                        Số điện thoại
+                        Giá bán dự kiến (triệu/m<sup>2</sup> | tỷ)  <i class="fa fa-fw fa-asterisk text-danger"></i>
                     </label>
-                    <input type="text" class="form-control" name="mobile" value="{{ old('mobile') }}"
-                           placeholder="Mobile">
-                    @foreach ($errors->get('mobile') as $message)
+                    <input type="text" class="form-control" name="price" value="{{ old('price') }}"
+                           placeholder="Price">
+                    @foreach ($errors->get('price') as $message)
                         <span class="help-block">{{ $message }}</span>
                     @endforeach
                 </div>
