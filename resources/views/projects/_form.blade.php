@@ -1,6 +1,8 @@
 <div class="modal fade" id="modal-project">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
+            <form method="post" action="{{ route('projects.store') }}" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>
@@ -137,10 +139,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success">Tạo mới</button>
+                <button type="submit" class="btn btn-success">Tạo mới</button>
             </div>
+            </form>
         </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+

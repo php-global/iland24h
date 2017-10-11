@@ -31,6 +31,7 @@ class Project extends Model
 
     public static function insertProject($request)
     {
+        $filePath = $request->file('image')->getClientOriginalName();
         $project = new Project();
         $project->title = $request->title;
         $project->slug = \App\Helpers\Common::convertViToEn($request->title, true);
@@ -38,13 +39,14 @@ class Project extends Model
         $project->area = $request->area;
         $project->direction = $request->direction;
         $project->location = $request->location;
-        $project->mobile = $request->mobile;
-        $project->image = $request->image;
+        $project->price = $request->price;
+        $project->image = $filePath;
         $project->description = $request->description;
         $project->content = $request->content;
         $project->view = 0;
         $project->active = 1;
         $project->author_id = Auth::user()->id;
+        $request->file('image')->move('storage/app/upload',$filePath);
         $project->save();
     }
 

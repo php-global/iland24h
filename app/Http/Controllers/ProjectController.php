@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -20,13 +21,13 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('projects._form');
     }
 
     /**
@@ -35,9 +36,14 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        //
+        dd(1);
+        Project::insertProject($request);
+        return redirect()->route('projects.index')->with([
+            'flash_level' => 'success',
+            'flash_message' => \App\Helpers\Msg::INSERT_SUCCESS
+        ]);
     }
 
     /**
