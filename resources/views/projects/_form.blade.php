@@ -91,7 +91,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btn-project" class="btn btn-success">Tạo mới</button>
+                <button type="submit" id="btn-project" class="btn btn-success">Tạo mới</button>
             </div>
             </form>
         </div>

@@ -1,7 +1,9 @@
-$('#btn-project').click(function () {
+$('#form-project').submit(function (e) {
+  e.preventDefault();
   $.ajax({
     type: "post",
-    data: $('#form-project').serialize(),
+    data: new FormData(this),
+    processData: false,
     dataType: 'json',
     success: function (response) {
       console.log(response)
