@@ -46,7 +46,7 @@ class Project extends Model
         $project->view = 0;
         $project->active = 1;
         $project->author_id = Auth::user()->id;
-        $request->file('image')->move('storage/app/upload',$filePath);
+        $request->file('image')->move('storage/app/upload/',$filePath);
         $project->save();
     }
 

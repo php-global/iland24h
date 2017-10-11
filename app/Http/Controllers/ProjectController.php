@@ -38,7 +38,7 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        dd(1);
+        die(1);
         Project::insertProject($request);
         return redirect()->route('projects.index')->with([
             'flash_level' => 'success',

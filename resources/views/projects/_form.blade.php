@@ -1,6 +1,6 @@
 <div class="modal fade" id="modal-project">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" >
             <form id="form-project" method="post" action="{{ route('projects.store') }}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="modal-header">
@@ -8,7 +8,7 @@
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">Tạo dự án</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" >
                 <div class="form-group">
                     <label for="title">
                         <i class="fa fa-status"></i>
