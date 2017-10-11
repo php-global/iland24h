@@ -17,18 +17,11 @@ $(function() {
     //Enable sidebar toggle
     $("[data-toggle='offcanvas']").click(function(e) {
         e.preventDefault();
-
-        //If window is small enough, enable sidebar push menu
-        if ($(window).width() <= 992) {
-            $('.row-offcanvas').toggleClass('active');
-            $('.left-side').removeClass("collapse-left");
-            $(".right-side").removeClass("strech");
-            $('.row-offcanvas').toggleClass("relative");
-        } else {
-            //Else, enable content streching
-            $('.left-side').toggleClass("collapse-left");
-            $(".right-side").toggleClass("strech");
-        }
+        $('.row-offcanvas').toggleClass('active');
+        $('.row-offcanvas').toggleClass('relative');
+        $('.left-side').toggleClass('collapse-left');
+        $('.right-side').toggleClass('strech');
+        $.cookie('theme_nvcllps', $('.left-side').hasClass('collapse-left') ? true : false, { expires: 30, path: '/' });
     });
 
     //Add hover support for touch devices
@@ -135,23 +128,14 @@ $(function() {
     });
 
     /* For demo purposes */
-    var demo = $("<div />").css({
-        position: "fixed",
-        top: "150px",
-        right: "0",
-        background: "rgba(0, 0, 0, 0.7)",
-        "border-radius": "5px 0px 0px 5px",
-        padding: "10px 15px",
-        "font-size": "16px",
-        "z-index": "999999",
-        cursor: "pointer",
-        color: "#ddd"
-    }).html("<i class='fa fa-gear'></i>").addClass("no-print");
+    var demo = $('#btn-settings');
+    var theme_skin = $.cookie('theme_skin');
+    var theme_fixed = $.cookie('theme_fixed');
 
     var demo_settings = $("<div />").css({
         "padding": "10px",
         position: "fixed",
-        top: "130px",
+        top: "51px",
         right: "-200px",
         background: "#fff",
         border: "3px solid rgba(0, 0, 0, 0.7)",
@@ -159,23 +143,25 @@ $(function() {
         "z-index": "999999"
     }).addClass("no-print");
     demo_settings.append(
-            "<h4 style='margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;'>Layout Options</h4>"
+            "<h4 style='margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;'>Tùy chỉnh bố cục</h4>"
             + "<div class='form-group no-margin'>"
             + "<div class='.checkbox'>"
             + "<label>"
-            + "<input type='checkbox' onchange='change_layout();'/> "
-            + "Fixed layout"
+            + "<input type='checkbox' onchange='change_layout();'"
+            + (theme_fixed === 'fixed' ? ' checked' : '')
+            + "/> Menu tĩnh"
             + "</label>"
             + "</div>"
             + "</div>"
             );
     demo_settings.append(
-            "<h4 style='margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;'>Skins</h4>"
+            "<h4 style='margin: 0 0 5px 0; border-bottom: 1px dashed #ddd; padding-bottom: 3px;'>Giao diện</h4>"
             + "<div class='form-group no-margin'>"
             + "<div class='.radio'>"
             + "<label>"
-            + "<input name='skins' type='radio' onchange='change_skin(\"skin-black\");' /> "
-            + "Black"
+            + "<input name='skins' type='radio' onchange='change_skin(\"skin-black\");'"
+            + (!theme_skin || theme_skin == 'skin-black' ? ' checked' : '')
+            + "/> Đen"
             + "</label>"
             + "</div>"
             + "</div>"
@@ -183,8 +169,9 @@ $(function() {
             + "<div class='form-group no-margin'>"
             + "<div class='.radio'>"
             + "<label>"
-            + "<input name='skins' type='radio' onchange='change_skin(\"skin-blue\");' checked='checked'/> "
-            + "Blue"
+            + "<input name='skins' type='radio' onchange='change_skin(\"skin-blue\");'"
+            + (theme_skin === 'skin-blue' ? ' checked' : '')
+            + "/> Xanh dương"
             + "</label>"
             + "</div>"
             + "</div>"
@@ -192,17 +179,14 @@ $(function() {
 
     demo.click(function() {
         if (!$(this).hasClass("open")) {
-            $(this).css("right", "200px");
             demo_settings.css("right", "0");
             $(this).addClass("open");
         } else {
-            $(this).css("right", "0");
             demo_settings.css("right", "-200px");
-            $(this).removeClass("open")
+            $(this).removeClass("open");
         }
     });
 
-    $("body").append(demo);
     $("body").append(demo_settings);
 });
 function fix_sidebar() {
@@ -219,11 +203,13 @@ function fix_sidebar() {
 }
 function change_layout() {
     $("body").toggleClass("fixed");
+    $.cookie('theme_fixed', $('body').hasClass('fixed') ? true : false, { expires: 30, path: '/' });
     fix_sidebar();
 }
 function change_skin(cls) {
     $("body").removeClass("skin-blue skin-black");
     $("body").addClass(cls);
+    $.cookie('theme_skin', cls, { expires: 30, path: '/' });
 }
 /*END DEMO*/
 $(window).load(function() {
@@ -329,7 +315,7 @@ $(window).load(function() {
                 return this.el
             }, a.prototype.finish = function() {
                 var a;
-                return a = this.getElement(), a.className = a.className.replace("pace-active", ""), a.className += " pace-inactive", document.body.className = document.body.className.replace("pace-running", ""), document.body.className += " pace-done"
+                return a = this.getElement(), a.className = a.className.replace("pace-active", ""), a.className += " pace-inactive", document.body.className = document.body.className.replace("pace-running", ""), document.body.className += "pace-done"
             }, a.prototype.update = function(a) {
                 return this.progress = a, this.render()
             }, a.prototype.destroy = function() {

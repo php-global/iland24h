@@ -6,14 +6,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>{{ config('app.name', 'iland24h') }} | Dashboard</title>
-    <!-- bootstrap 3.0.2 -->
+    <!-- Bootstrap 3.0.2 -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
-    <!-- font Awesome -->
+    <!-- Font Awesome -->
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Ionicons -->
     <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
-    <link href="{{ asset('css/AdminLTE.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('css/master.css') }}" rel="stylesheet" type="text/css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,7 +22,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="skin-blue">
+<body class="{{ (Request::cookie('theme_skin') ? Request::cookie('theme_skin') : 'skin-black') . (Request::cookie('theme_fixed') === 'true' ? ' fixed' : '') }}">
 <!-- header logo: style can be found in header.less -->
 <header class="header">
     <a href="{{ url('/') }}" class="logo">
@@ -32,28 +32,24 @@
     <!-- Header Navbar: style can be found in header.less -->
     @include('layouts.admin.navbar')
 </header>
-<div class="wrapper row-offcanvas row-offcanvas-left">
+<div class="wrapper row-offcanvas row-offcanvas-left{{ Request::cookie('theme_nvcllps') === 'true' ? '' : ' active relative' }}">
     <!-- Left side column. contains the logo and sidebar -->
     @include('layouts.admin.sidebar')
 
     <!-- Right side column. Contains the navbar and content of the page -->
-    <aside class="right-side">
+    <aside class="right-side{{ Request::cookie('theme_nvcllps') === 'true' ? ' strech' : '' }}">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                Blank page
-                <small>Control panel</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Blank page</li>
-            </ol>
+            @yield('header')
+            @yield('breadcrumb')
         </section>
 
         <!-- Main content -->
         <section class="content">
             @if(Session::has('flash_message'))
-                <div class="alert alert-{{ Session::get('flash_level') }}">
+                <div class="alert alert-{{ Session::get('flash_level') }} alert-dismissable">
+                    <i class="fa fa-check"></i>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     {{ Session::get('flash_message') }}
                 </div>
             @endif
@@ -66,9 +62,13 @@
 <!-- jQuery 2.0.2 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('js/AdminLTE/app.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('js/libs/bootstrap.min.js') }}" type="text/javascript"></script>
+<!-- Jquery Cookie -->
+<script src="{{ asset('js/libs/jquery.cookie.js') }}" type="text/javascript"></script>
+<!-- App -->
+<script src="{{ asset('js/apps/master.js') }}" type="text/javascript"></script>
+<!-- Helper -->
+<script src="{{ asset('js/helpers/common.js') }}" type="text/javascript"></script>
+@yield('script')
 </body>
 </html>
