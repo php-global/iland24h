@@ -69,7 +69,7 @@
                         </td>
                         <td>
                             <i class="fa fa-pencil fa-fw"></i>
-                            <a href="{{ route('projects.edit', $project->id) }}">Sửa</a>
+                            <a href="{{ url('/getEditProject/'.$project->id) }}">Sửa</a>
                         </td>
                         <td>
                             <form action="{{ route('projects.destroy', $project->id) }}" method="POST">

@@ -62,7 +62,7 @@
                         <i class="fa fa-status"></i>
                         Ảnh giới thiệu <i class="fa fa-fw fa-asterisk text-danger"></i>
                     </label>
-                    <input type="file" name="image1">
+                    <input type="file" name="image">
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">

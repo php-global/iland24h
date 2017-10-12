@@ -42,7 +42,7 @@ class Project extends Model
         $project->direction = $request->direction;
         $project->location = $request->location;
         $project->price = $request->price;
-        $file_name = $request->image1->store('storage/app/public/project');
+        $file_name = $request->image->store('storage/app/public/project');
         $project->image = $file_name;
         $project->description = $request->description;
         $project->content = $request->content;
@@ -65,8 +65,14 @@ class Project extends Model
         $project->area = $request->area;
         $project->direction = $request->direction;
         $project->location = $request->location;
-        $project->mobile = $request->mobile;
-        $project->image = $request->image;
+        $project->price = $request->price;
+        if($request->hasFile('image')){
+            if(File::exists($project->image)){
+                File::delete($project->image);
+            }
+            $file_name = $request->image->store('storage/app/public/project');
+            $project->image = $file_name;
+        }
         $project->description = $request->description;
         $project->content = $request->content;
         $project->view = 0;
@@ -79,6 +85,10 @@ class Project extends Model
     {
         $project = Project::findOrFail($id);
         $project->delete();
+    }
+    public static function getProjectByID($id){
+        $project = Project::where('id', $id)->get();
+        return $project;
     }
 
     public function index()

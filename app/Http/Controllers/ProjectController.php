@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
+use function Sodium\compare;
 
 class ProjectController extends Controller
 {
@@ -68,7 +69,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+
     }
 
     /**
@@ -78,9 +79,14 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(ProjectRequest $request,$id)
     {
-        //
+        Project::updateProject($request,$id);
+        return redirect()->route('projects.index')->with([
+            'flash_level' => 'success',
+            'flash_message' => \App\Helpers\Msg::UPDATE_SUCCESS
+
+        ]);
     }
 
     /**
@@ -95,6 +101,20 @@ class ProjectController extends Controller
         return redirect()->route('projects.index')->with([
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::DELETE_SUCCESS
+        ]);
+    }
+    public function getEditProject($id){
+        $data = Project::getProjectByID($id);
+        return view('projects.edit',['data'=>$data]);
+    }
+
+    public function postEditProject(ProjectRequest $request,$id)
+    {
+        Project::updateProject($request,$id);
+        return redirect()->route('projects.index')->with([
+            'flash_level' => 'success',
+            'flash_message' => \App\Helpers\Msg::UPDATE_SUCCESS
+
         ]);
     }
 }
