@@ -22,7 +22,7 @@ class CreateProjectsTable extends Migration
       $table->string('direction')->nullable();//phương hướng
       $table->string('location')->nullable();//vị trí
       $table->string('price');//Giá bán dự kiến
-      $table->string('image', 50);//hình ảnh giới thiệu
+      $table->string('image');//hình ảnh giới thiệu
       $table->text('description')->nullable();//giới thiệu dự án
       $table->longText('content');//nội dung chi tiết dự án
       $table->integer('view')->default(0);

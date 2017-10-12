@@ -1,7 +1,7 @@
 <div class="modal fade" id="modal-project">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" >
-            <form id="form-project" method="post" action="{{ route('projects.store') }}" enctype="multipart/form-data">
+            <form id="form-project"  method="post" action="{{url('insert')}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -62,7 +62,7 @@
                         <i class="fa fa-status"></i>
                         Ảnh giới thiệu <i class="fa fa-fw fa-asterisk text-danger"></i>
                     </label>
-                    <input type="file" name="image">
+                    <input type="file" name="image1">
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">
@@ -94,6 +94,7 @@
                 <button type="submit" id="btn-project" class="btn btn-success">Tạo mới</button>
             </div>
             </form>
+
         </div>
         <!-- /.modal-content -->
     </div>

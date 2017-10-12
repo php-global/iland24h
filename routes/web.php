@@ -23,3 +23,10 @@ Route::get('/admin', function () {
 });
 Route::resource('categories', 'CategoryController');
 Route::resource('projects', 'ProjectController');
+/*Route::get('insertProject','ProjectController@store');
+Route::get('projects','ProjectController@index');*/
+//Route::get('projects', 'UserController@showProfile')->name('profile');
+//Route::get('/projects/','ProjectController@index');
+
+Route::get('test', 'ProjectController@index');
+Route::post('insert', 'ProjectController@store');

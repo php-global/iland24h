@@ -16,6 +16,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
+
         $projects = Project::getListProjects($request);
         return view('projects.index', compact('projects'));
     }
@@ -38,11 +39,13 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        die(1);
-        Project::insertProject($request);
+        //dd($request->file('image1'));
+        $a = new Project();
+        $a->insertProject($request);
         return redirect()->route('projects.index')->with([
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::INSERT_SUCCESS
+
         ]);
     }
 
@@ -86,8 +89,12 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        Project::deleteProject($id);
+        return redirect()->route('projects.index')->with([
+            'flash_level' => 'success',
+            'flash_message' => \App\Helpers\Msg::DELETE_SUCCESS
+        ]);
     }
 }

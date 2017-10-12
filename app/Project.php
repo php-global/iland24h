@@ -1,8 +1,10 @@
 <?php
 
 namespace App;
-
+use File;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use App\Photo;
 
 class Project extends Model
 {
@@ -29,9 +31,9 @@ class Project extends Model
         return $query->orderBy('id', 'DESC')->paginate($pageSize);
     }
 
-    public static function insertProject($request)
+    public function insertProject($request)
     {
-        $filePath = $request->file('image')->getClientOriginalName();
+
         $project = new Project();
         $project->title = $request->title;
         $project->slug = \App\Helpers\Common::convertViToEn($request->title, true);
@@ -40,14 +42,18 @@ class Project extends Model
         $project->direction = $request->direction;
         $project->location = $request->location;
         $project->price = $request->price;
-        $project->image = $filePath;
+        $file_name = $request->image1->store('storage/app/public/project');
+        $project->image = $file_name;
         $project->description = $request->description;
         $project->content = $request->content;
         $project->view = 0;
         $project->active = 1;
         $project->author_id = Auth::user()->id;
-        $request->file('image')->move('storage/app/upload/',$filePath);
         $project->save();
+       // $request->file('image')->move('storage/app/upload/', $filePath);
+       /* $file_name = $request->file('image')->store('upload');
+        $project->image = $file_name;*/
+
     }
 
     public static function updateProject($request, $id)
@@ -73,5 +79,10 @@ class Project extends Model
     {
         $project = Project::findOrFail($id);
         $project->delete();
+    }
+
+    public function index()
+    {
+        die('1');
     }
 }
