@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +40,7 @@ Route::get('/test', function () {
     return view('test');
 });
 Route::post('/test', function (Request $request) {
-    $path = $request->fileToUpload->store('test');
-    dd($path);
+    $path = $request->fileToUpload->store('test', 'public');
+    echo ($path);
+    echo '<img src="'. Storage::url($path) . '" >';
 });
