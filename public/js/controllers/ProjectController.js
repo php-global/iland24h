@@ -1,6 +1,4 @@
 /*
-
-
 $('#form-project').submit(function (e) {
   e.preventDefault();
   $.ajax({
@@ -32,34 +30,8 @@ $('#form-project').submit(function (e) {
     }
   });
 });
+
 */
-$(document).ready(function() {
-  $('#loginForm').formValidation({
-    framework: 'bootstrap',
-    excluded: ':disabled',
-    icon: {
-      valid: 'glyphicon glyphicon-ok',
-      invalid: 'glyphicon glyphicon-remove',
-      validating: 'glyphicon glyphicon-refresh'
-    },
-    fields: {
-      username: {
-        validators: {
-          notEmpty: {
-            message: 'The username is required'
-          }
-        }
-      },
-      password: {
-        validators: {
-          notEmpty: {
-            message: 'The password is required'
-          }
-        }
-      }
-    }
-  });
-});
 
 
 /*
@@ -100,3 +72,27 @@ $('#form-project').validate({
 }
 });
 */
+
+
+$('.edit-form').click(function () {
+    // alert('click');
+    var id = $(this).attr('id');
+    $.ajax({
+       url:'/getID',
+       data: {'id':id},
+       type:'GET',
+       success: function (response) {
+         $('#contentDialog').html('');
+         $('#contentDialog').html(response);
+       }
+     });
+
+});
+$('.btn-project').click(function (e) {
+  if($('#error').val()){
+    e.preventDefault();
+  }
+
+});
+
+

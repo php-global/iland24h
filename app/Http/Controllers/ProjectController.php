@@ -79,7 +79,7 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(ProjectRequest $request,$id)
+    public function update(Request $request,$id)
     {
         Project::updateProject($request,$id);
         return redirect()->route('projects.index')->with([
@@ -102,6 +102,12 @@ class ProjectController extends Controller
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::DELETE_SUCCESS
         ]);
+    }
+    public function getID(Request $request)
+    {
+        $id = $request->get('id');
+        $data = Project::getProjectByID($id);
+        return view('projects._formEdit',['data'=>$data]);
     }
     public function getEditProject($id){
         $data = Project::getProjectByID($id);

@@ -28,6 +28,7 @@ class ProjectRequest extends FormRequest
             'owner' =>'required|max:200',
             'price' =>'required',
             'image' => 'required | max:5000',
+            'content' =>'required'
             //
         ];
     }

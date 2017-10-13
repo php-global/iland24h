@@ -24,7 +24,7 @@ class Project extends Model
     public static function getListProjects($request)
     {
         $pageSize = is_numeric($request->get('size')) ? $request->get('size') : PAGE_SIZE_DEFAULT;
-        $query = Project::select('id', 'title', 'slug', 'owner', 'view', 'active', 'author_id');
+        $query = Project::select();
         if($request->get('search')){
             $query->where('title', 'LIKE', "%{$request->get('search')}%");
         }
@@ -42,7 +42,7 @@ class Project extends Model
         $project->direction = $request->direction;
         $project->location = $request->location;
         $project->price = $request->price;
-        $file_name = $request->image->store('storage/app/public/project');
+        $file_name = $request->image->store('public/project');
         $project->image = $file_name;
         $project->description = $request->description;
         $project->content = $request->content;
@@ -70,7 +70,7 @@ class Project extends Model
             if(File::exists($project->image)){
                 File::delete($project->image);
             }
-            $file_name = $request->image->store('storage/app/public/project');
+            $file_name = $request->image->store('public/project');
             $project->image = $file_name;
         }
         $project->description = $request->description;

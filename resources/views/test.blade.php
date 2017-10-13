@@ -1,19 +1,13 @@
-@extends('layouts.admin.master')
+<!DOCTYPE html>
+<html>
+<body>
 
-@section('header')
-<h1>
-    Danh mục tin tức
-    <small>Thêm mới</small>
-</h1>
-@endsection
+<form action="/test" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    {{ csrf_field() }}
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form>
 
-@section('breadcrumb')
-<ol class="breadcrumb">
-    <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Danh mục tin tức</li>
-</ol>
-@endsection
-
-@section('content')
-TEST
-@endsection
+</body>
+</html>

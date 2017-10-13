@@ -1,6 +1,17 @@
 <div class="modal fade" id="modal-project">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" >
+            @if ($errors->any())
+
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            <input type="hidden" value="{{$error}}" id="error">
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form id="form-project"  method="post" action="{{url('insert')}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="modal-header">
