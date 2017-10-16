@@ -1,9 +1,11 @@
 <?php
 
 namespace App;
+use Input;
 use File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Photo;
 
 class Project extends Model
@@ -43,13 +45,25 @@ class Project extends Model
         $project->location = $request->location;
         $project->price = $request->price;
         $file_name = $request->image->store('public/project');
-        $project->image = $file_name;
+        $project->image = Storage::url($file_name);
         $project->description = $request->description;
         $project->content = $request->content;
         $project->view = 0;
         $project->active = 1;
         $project->author_id = Auth::user()->id;
         $project->save();
+        $project_id = $project->id;
+        if($request->hasFile('projectDetail')){
+            foreach ($request->file('projectDetail') as $file){
+                $project_img = new Photo();
+                if(isset($file)){
+                    $file_name_img = $file->store('public/project/thumbnails');
+                    $project_img->project_id = $project_id;
+                    $project_img->image = $file_name_img;
+                    $project_img->save();
+                }
+            }
+        }
        // $request->file('image')->move('storage/app/upload/', $filePath);
        /* $file_name = $request->file('image')->store('upload');
         $project->image = $file_name;*/
@@ -71,7 +85,7 @@ class Project extends Model
                 File::delete($project->image);
             }
             $file_name = $request->image->store('public/project');
-            $project->image = $file_name;
+            $project->image = Storage::url($file_name);
         }
         $project->description = $request->description;
         $project->content = $request->content;
@@ -87,12 +101,11 @@ class Project extends Model
         $project->delete();
     }
     public static function getProjectByID($id){
-        $project = Project::where('id', $id)->get();
-        return $project;
+        return Project::find($id);
     }
 
-    public function index()
-    {
-        die('1');
+    public function photo(){
+        return $this->hasMany('App\Photo');
     }
+
 }

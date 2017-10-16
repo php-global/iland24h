@@ -1,19 +1,31 @@
 /*
+
 $('#form-project').submit(function (e) {
   e.preventDefault();
+  var data1={
+    title:$('#title').val(),
+    title:$('#owner').val(),
+    title:$('#area').val(),
+    title:$('direction').val(),
+    title:$('location').val(),
+    title:$('title').val(),
+    title:$('title').val(),
+    title:$('title').val(),
+  }
   $.ajax({
-    src :$('#form-project').attr('action'),
-    type: "post",
-    data: new FormData(this),
+    type:'post',
+    url:'insert',
+    data: new FormData($("#form-project")[0]), /!*new FormData(this)*!/
     processData: false,
     dataType: 'json',
     success: function (data) {
-      alert(1);
+      $('modal-project').hide();
+      location.reload('projects.index');
     },
     error: function (error) {
-      //console.log(error);
+
       if (error.responseJSON) {
-        $('#form-project').find('input:visible, textarea').each(function () {
+        $('#form-project').find('input:visible,erea').each(function () {
           if (error.responseJSON.hasOwnProperty($(this).attr('name'))) {
             $(this).closest('div').removeClass('has-success').addClass('has-error');
             $(this).prev().find('.fa-status').removeClass('fa-check').addClass('fa-times-circle-o');
@@ -29,58 +41,16 @@ $('#form-project').submit(function (e) {
       }
     }
   });
-});
+});*/
 
-*/
-
-
-/*
-$('#form-project').validate({
-  onkeyup: false,
-  rules: {
-
-  title: {
-      required: true,
-      minlength: 5
-    },
-  owner: {
-      required: true,
-    },
-    image1: {
-      required: true,
-      maxlength:5000
-    },
-    price: {
-      required: true,
-    }
-
-  }
-,
-
-  submitHandler: function(form) {
-  $.ajax({
-    url: form.action,
-    type: form.method,
-    data: $(form).serialize(),
-    success: function(response) {
-      $('#answers').html(response);
-    },
-    error: function (error) {
-        console.log(error);
-    }
-  });
-}
-});
-*/
 
 
 $('.edit-form').click(function () {
     // alert('click');
-    var id = $(this).attr('id');
+    var id = $(this).attr('data-id');
     $.ajax({
-       url:'/getID',
-       data: {'id':id},
-       type:'GET',
+       url:'/projects/' + id + '/edit',
+       type: 'GET',
        success: function (response) {
          $('#contentDialog').html('');
          $('#contentDialog').html(response);
@@ -88,11 +58,29 @@ $('.edit-form').click(function () {
      });
 
 });
-$('.btn-project').click(function (e) {
+$(document).ready(function(){
+  $(".delete_data").click(function(){
+    var del_id = $(this).attr('id');
+    $.ajax({
+      type:'DELETE',
+      url:'/projects/' + del_id,
+      success:function(data) {
+        console.log(data);
+      },
+      error:function (error) {
+        console.log(error.responseJSON);
+      }
+    });
+
+  });
+});
+/*
+$('#btn-project').click(function (e) {
   if($('#error').val()){
     e.preventDefault();
   }
 
 });
+*/
 
 

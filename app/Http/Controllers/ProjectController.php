@@ -6,6 +6,7 @@ use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use function Sodium\compare;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -40,14 +41,14 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        //dd($request->file('image1'));
         $a = new Project();
         $a->insertProject($request);
         return redirect()->route('projects.index')->with([
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::INSERT_SUCCESS
-
         ]);
+
+
     }
 
     /**
@@ -67,8 +68,10 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function edit(Project $project)
+    public function edit(Request $request, $id)
     {
+        $project = Project::getProjectByID($id);
+        return view('projects._formEdit',['project'=>$project]);
 
     }
 
@@ -79,14 +82,14 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(ProjectRequest $request,$id)
     {
         Project::updateProject($request,$id);
         return redirect()->route('projects.index')->with([
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::UPDATE_SUCCESS
-
         ]);
+
     }
 
     /**
@@ -95,23 +98,17 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ProjectRequest $request)
     {
-        Project::deleteProject($id);
-        return redirect()->route('projects.index')->with([
+        return ['tesing' => 1];
+//
+//        $id = $request->delete_id;
+//        dd($id);
+//        Project::deleteProject($id);
+       /* return redirect()->route('projects.index')->with([
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::DELETE_SUCCESS
-        ]);
-    }
-    public function getID(Request $request)
-    {
-        $id = $request->get('id');
-        $data = Project::getProjectByID($id);
-        return view('projects._formEdit',['data'=>$data]);
-    }
-    public function getEditProject($id){
-        $data = Project::getProjectByID($id);
-        return view('projects.edit',['data'=>$data]);
+        ]);*/
     }
 
     public function postEditProject(ProjectRequest $request,$id)

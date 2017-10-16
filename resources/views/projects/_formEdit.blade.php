@@ -5,9 +5,9 @@
     CKEDITOR.replace('content');
   });
 </script>
-@foreach($data as $project )
-<form method="post" action="{{url('postEditProject/'.$project->id)}}" enctype="multipart/form-data">
+<form method="post" action=" {{ route('projects.update',$project->id) }} " enctype="multipart/form-data">
     {!! csrf_field() !!}
+    <input type="hidden" name="_method" value="PUT">
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -93,9 +93,11 @@
                 Ảnh giới thiệu <i
                         class="fa fa-fw fa-asterisk text-danger"></i>
             </label>
-            <input type="file" name="image">
-            <img src="{{asset($project->image)}}" alt="Image"
-                 class="img-current">
+
+            <input type="file" name="image" value="{{asset($project->image)}}">
+            {{--<img src="{{storage_path('app/')}}" alt="Image"
+                 class="img-current">--}}
+            <img style="width: 40px; height: 40px" src="{{asset($project->image)}}" >
             <span class="help-block"></span>
         </div>
         <div class="form-group">
@@ -128,11 +130,10 @@
             <span class="help-block"></span>
         </div>
     <div class="modal-footer">
-        <button type="submit" id="btn-project" class="btn btn-success">
+        <button type="submit" id="btn-update" class="btn btn-success">
             Cập nhật
         </button>
     </div>
 
 </div>
 </form>
-@endforeach

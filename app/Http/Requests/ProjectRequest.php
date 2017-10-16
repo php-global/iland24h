@@ -23,13 +23,27 @@ class ProjectRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'title' =>'required|max:200',
-            'owner' =>'required|max:200',
-            'price' =>'required',
-            'image' => 'required | max:5000',
-            'content' =>'required'
-            //
-        ];
+        switch ($this->method()) {
+            case 'POST': {
+                return [
+                    'title' => 'required|max:200',
+                    'owner' => 'required|max:200',
+                    'price' => 'required',
+                    'image' => 'required | max:5000',
+                    'content' => 'required'
+                ];
+            }
+            case 'PUT': {
+                return [
+                    'title' => 'required|max:200',
+                    'owner' => 'required|max:200',
+                    'price' => 'required',
+                    'image' => ' | max:5000',
+                    'content' => 'required'
+                ];
+            }
+            default:
+                break;
+        }
     }
 }

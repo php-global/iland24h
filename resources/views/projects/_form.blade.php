@@ -1,18 +1,7 @@
 <div class="modal fade" id="modal-project">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" >
-            @if ($errors->any())
-
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            <input type="hidden" value="{{$error}}" id="error">
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <form id="form-project"  method="post" action="{{url('insert')}}" enctype="multipart/form-data">
+            <form id="form-project"  method="post" action="{{route('projects.store')}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -25,7 +14,7 @@
                         <i class="fa fa-status"></i>
                         Tên dự án <i class="fa fa-fw fa-asterisk text-danger"></i>
                     </label>
-                    <input type="text" class="form-control" name="title" placeholder="Title">
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Title">
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">
@@ -33,7 +22,7 @@
                         <i class="fa fa-status"></i>
                         Chủ đầu tư <i class="fa fa-fw fa-asterisk text-danger"></i>
                     </label>
-                    <input type="text" class="form-control" name="owner" placeholder="Owner">
+                    <input type="text" class="form-control" name="owner" id="owner" placeholder="Owner">
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">
@@ -41,7 +30,7 @@
                         <i class="fa fa-status"></i>
                         Diện tích (m<sup>2</sup>)
                     </label>
-                    <input type="text" class="form-control" name="area" placeholder="Area">
+                    <input type="text" class="form-control" name="area" id="area" placeholder="Area">
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">
@@ -49,7 +38,7 @@
                         <i class="fa fa-status"></i>
                         Phương hướng
                     </label>
-                    <input type="text" class="form-control" name="direction" placeholder="Direction">
+                    <input type="text" class="form-control" name="direction" id="direction" placeholder="Direction">
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">
@@ -57,7 +46,7 @@
                         <i class="fa fa-status"></i>
                         Vị trí
                     </label>
-                    <input type="text" class="form-control" name="location" placeholder="Location">
+                    <input type="text" class="form-control" name="location" id="location" placeholder="Location">
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">
@@ -65,7 +54,7 @@
                         <i class="fa fa-status"></i>
                         Giá bán dự kiến (triệu/m<sup>2</sup> | tỷ)  <i class="fa fa-fw fa-asterisk text-danger"></i>
                     </label>
-                    <input type="text" class="form-control" name="price" placeholder="Price">
+                    <input type="text" class="form-control" name="price" id="price" placeholder="Price">
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">
@@ -81,7 +70,10 @@
                         <i class="fa fa-status"></i>
                         Ảnh thumbnail
                     </label>
-                    <button type="button" class="btn btn-xs btn-success" onclick="addPhoto();">Thêm ảnh thu nhỏ</button>
+                    {{--<button type="button" class="btn btn-xs btn-success" onclick="addPhoto();">Thêm ảnh thu nhỏ</button>--}}
+                    @for($i= 0; $i<5 ; $i++)
+                        <input type="file" name="projectDetail[]">
+                    @endfor
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">
@@ -89,7 +81,7 @@
                         <i class="fa fa-status"></i>
                         Giới thiệu thông tin sơ lược dự án
                     </label>
-                    <textarea class="form-control" rows="3" name="description" placeholder="Description"></textarea>
+                    <textarea class="form-control" rows="3" name="description" id="description" placeholder="Description"></textarea>
                     <span class="help-block"></span>
                 </div>
                 <div class="form-group">
@@ -97,7 +89,7 @@
                         <i class="fa fa-status"></i>
                         Nội dung dự án <i class="fa fa-fw fa-asterisk text-danger"></i>
                     </label>
-                    <textarea class="form-control" rows="5" name="content" placeholder="Content"></textarea>
+                    <textarea class="form-control" rows="5" name="content" id="content" placeholder="Content"></textarea>
                     <span class="help-block"></span>
                 </div>
             </div>

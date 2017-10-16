@@ -68,7 +68,7 @@
                                             data-target="#myModal">Open Modal
                                     </button>--}}
                                     <i class="fa fa-pencil fa-fw"></i>
-                                    <a  data-toggle="modal" data-target="#myModal" class="edit-form" id="{{ $project->id }}" href="">Sửa</a>
+                                    <a  data-toggle="modal" data-target="#myModal" class="edit-form" data-id="{{ $project->id }}" href="javacript:void(0);">Sửa</a>
                                     <input type="hidden" id="id-project" value="{{$project->id}}">
                                    <div class="modal fade" id="myModal" role="dialog">
                                         <div class="modal-dialog" >
@@ -89,6 +89,7 @@
                                         <a href="javascript:void(0);"
                                            onclick="if(confirm('Bạn có chắc chắn muốn xóa?')){$(this).parent().submit();}">Xóa</a>
                                     </form>
+                                    <a class="delete_data" id="{{$project->id}}">Delete</a>
                                 </td>
                             </tr>
                         @endforeach

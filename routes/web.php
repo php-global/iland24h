@@ -25,22 +25,6 @@ Route::get('/admin', function () {
 Route::resource('categories', 'CategoryController');
 Route::resource('projects', 'ProjectController');
 
-Route::get('getEditProject/{id}', 'ProjectController@getEditProject');
-Route::get('getID', 'ProjectController@getID');
-Route::post('postEditProject/{id}','ProjectController@postEditProject');
+Route::post('delete','ProjectController@destroy');
+Route::post('insert','ProjectController@store');
 
-Route::post('insert', 'ProjectController@store');
-
-Route::get('/admin', function () {
-    return view('categories.index');
-});
-
-
-Route::get('/test', function () {
-    return view('test');
-});
-Route::post('/test', function (Request $request) {
-    $path = $request->fileToUpload->store('test', 'public');
-    echo ($path);
-    echo '<img src="'. Storage::url($path) . '" >';
-});
