@@ -23,3 +23,4 @@ Route::get('/admin', function () {
 });
 Route::resource('categories', 'CategoryController');
 Route::resource('projects', 'ProjectController');
+Route::get('test', 'CategoryController@sendMail');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
+use Auth;
+use Mail;
 
 class CategoryController extends Controller
 {
@@ -97,5 +99,18 @@ class CategoryController extends Controller
             'flash_level' => 'success',
             'flash_message' => \App\Helpers\Msg::DELETE_SUCCESS
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function sendMail()
+    {
+        $user = Auth::user();
+        $result = Mail::send('mail.test', ['content' => 'Noi dung'], function($message) use ($user){
+            $message->from('dangvandai1992@gmail.com', 'dangvandai1992');
+            $message->to($user->email, $user->name)->subject('Tiêu đề mail!');
+        });
+        dd($result);
     }
 }
