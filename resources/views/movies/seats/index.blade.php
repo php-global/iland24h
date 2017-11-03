@@ -86,7 +86,7 @@
 
         }
 
-        div.seatCharts-seat.available.first-class {
+        div.seatCharts-seat.available.vip-class {
             /* 	background: url(vip.png); */
             background-color: #3a78c3;
         }
@@ -105,7 +105,7 @@
 
         div.seatCharts-container {
             border-right: 1px dotted #adadad;
-            width: 200px;
+            width: 300px;
             padding: 20px;
             float: left;
         }
@@ -168,27 +168,17 @@
                     $counter = $('#counter'),
                     $total = $('#total'),
                     sc = $('#seat-map').seatCharts({
-                        map: [
-                            'ff_ff',
-                            'ff_ff',
-                            'ee_ee',
-                            'ee_ee',
-                            'ee___',
-                            'ee_ee',
-                            'ee_ee',
-                            'ee_ee',
-                            'eeeee',
-                        ],
+                        map: {!! json_encode($maps) !!},
                         seats: {
-                            f: {
-                                price: 100,
-                                classes: 'first-class', //your custom CSS class
-                                category: 'First Class'
+                            v: {
+                                price: 80,
+                                classes: 'vip-class', //your custom CSS class
+                                category: 'Vip Class'
                             },
-                            e: {
-                                price: 40,
-                                classes: 'economy-class', //your custom CSS class
-                                category: 'Economy Class'
+                            n: {
+                                price: 50,
+                                classes: 'normal-class', //your custom CSS class
+                                category: 'Normal Class'
                             }
 
                         },
@@ -201,8 +191,8 @@
                         legend: {
                             node: $('#legend'),
                             items: [
-                                ['f', 'available', 'First Class'],
-                                ['e', 'available', 'Economy Class'],
+                                ['v', 'available', 'Vip Class'],
+                                ['n', 'available', 'Normal Class'],
                                 ['f', 'unavailable', 'Already Booked']
                             ]
                         },
@@ -249,9 +239,6 @@
                 //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
                 sc.get($(this).parents('li:first').data('seatId')).click();
             });
-
-            //let's pretend some seats have already been booked
-            sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
 
         });
 

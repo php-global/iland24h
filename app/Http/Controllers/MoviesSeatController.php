@@ -12,13 +12,14 @@ class MoviesSeatController extends Controller
 {
     public function index(Request $request)
     {
-        $sql = 'SELECT MAX(count) AS max_number FROM (
-                  SELECT row, COUNT(number)
+        $sql = 'SELECT MAX(total) AS max_number FROM (
+                  SELECT row, COUNT(number) AS total
                 FROM movies_seats
                 GROUP BY row
                 ) AS temp';
         $max_number = DB::select(DB::raw($sql))[0]->max_number;
         //dd($max_number);
+
         $moviesSeats = DB::table('movies_seats')
             ->join('movies_seat_types', 'movies_seats.seat_type_id', '=', 'movies_seat_types.id')
             ->select('movies_seats.row', 'movies_seats.number', 'movies_seat_types.name')
@@ -26,29 +27,23 @@ class MoviesSeatController extends Controller
             ->orderBy('movies_seats.number', 'ASC')
             ->get();
         //dd($moviesSeats);
-        $maps = [];
 
+        $seats = [];
         foreach ($moviesSeats as $moviesSeat){
-            $maps[$moviesSeat->row][$moviesSeat->number] = $this->getMoviesTypeMap($moviesSeat->name);
+            $seats[$moviesSeat->row][$moviesSeat->number] = $this->getMoviesTypeMap($moviesSeat->name);
         }
-        $index = 0;
-        for($i = 1; $i <= count($maps); $i++){
-            for($j = 1; $j <= $max_number; $j++){
-                if(isset($maps[$i][$j+ $index])){
+        //dd($seats);
 
-                }else{
-                    $maps[$i][$j+ $index] = '_';
-                }
-                if($j == $max_number){
-                    $index = $j - 1;
-                }
+        $maps = [];
+        for($i = 1; $i <= count($seats); $i++){
+            $maxi = count($seats[$i]);
+            for($j = 1; $j <= $max_number - $maxi; $j++){
+                $seats[$i][] = '_';
             }
+            $maps[] = implode($seats[$i], '');
         }
-
-        dd($maps);
-        return view('movies.seats.index');
-        dd(MoviesAuditorium::find(2)->moviesSeats);
-        dd(MoviesSeatType::find(1)->moviesSeats);
+        //dd($maps);
+        return view('movies.seats.index', compact('maps'));
 
     }
 
