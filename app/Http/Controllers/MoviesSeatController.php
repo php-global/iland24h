@@ -22,7 +22,11 @@ class MoviesSeatController extends Controller
 
         $moviesSeats = DB::table('movies_seats')
             ->join('movies_seat_types', 'movies_seats.seat_type_id', '=', 'movies_seat_types.id')
-            ->select('movies_seats.row', 'movies_seats.number', 'movies_seat_types.name')
+            ->select(DB::raw('CASE movies_seat_types.id
+                WHEN 1 THEN "v"
+                WHEN 2 THEN "n"
+                ELSE "_"
+                END AS type'), 'movies_seats.row', 'movies_seats.number', 'movies_seat_types.name')
             ->orderBy('movies_seats.row', 'ASC')
             ->orderBy('movies_seats.number', 'ASC')
             ->get();
@@ -30,7 +34,7 @@ class MoviesSeatController extends Controller
 
         $seats = [];
         foreach ($moviesSeats as $moviesSeat){
-            $seats[$moviesSeat->row][$moviesSeat->number] = $this->getMoviesTypeMap($moviesSeat->name);
+            $seats[$moviesSeat->row][$moviesSeat->number] = $moviesSeat->type;
         }
         //dd($seats);
 
@@ -45,14 +49,5 @@ class MoviesSeatController extends Controller
         //dd($maps);
         return view('movies.seats.index', compact('maps'));
 
-    }
-
-    /**
-     * @return string
-     */
-    public function getMoviesTypeMap($name)
-    {
-        $name = strtolower($name);
-        return $name === 'ghe vip' ? 'v' : ($name === 'ghe thuong' ? 'n' : '_');
     }
 }
